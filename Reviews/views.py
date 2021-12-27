@@ -32,13 +32,13 @@ class ReviewDetail(generics.RetrieveUpdateAPIView):
 class LikeCreateDelete(generics.CreateAPIView, generics.DestroyAPIView):
 
     serializer_class = LikeSerializer
-    lookup_field = 'review_id'
 
     def get_queryset(self):
         return Like.objects.filter(
             review=self.kwargs.get('review_id'), owner=self.request.user
         )
 
-    def perform_create(self, serializer):
-        review =  get_object_or_404(Review, pk=self.kwargs.get('review_id'))
-        serializer.save(review=review)
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({'review': self.kwargs.get('review_id')})
+        return context
