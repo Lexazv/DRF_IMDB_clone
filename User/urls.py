@@ -10,3 +10,4 @@ urlpatterns = [
    path('refresh/', token_refresh, name='refresh'),
    path('logout/', Logout.as_view(), name='logout'),
 ]
+

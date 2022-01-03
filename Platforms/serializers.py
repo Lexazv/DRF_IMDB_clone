@@ -17,7 +17,8 @@ class PlatformSerializer(serializers.ModelSerializer):
 
     films = FilmNestedSerializer(many=True, read_only=True)
     owner = serializers.PrimaryKeyRelatedField(
-        queryset=Platform.objects.all(), default=serializers.CurrentUserDefault()
+        queryset=Platform.objects.all(), 
+        default=serializers.CurrentUserDefault()
     )
 
     class Meta:

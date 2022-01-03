@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 
@@ -20,12 +21,27 @@ class ReviewSerializer(serializers.ModelSerializer):
             owner=data.get('owner'), film=data.get('film')
         ).exists():
             raise ValidationError('user review already exists')
+        return data
+
+
+class ReviewFromURL:
+
+    requires_context = True
+
+    def __call__(self, review_field):
+        request = review_field.context.get('request')
+        review_id = request.parser_context.get('kwargs').get('review_id')
+        review = get_object_or_404(Review, pk=review_id)
+        return review
 
 
 class LikeSerializer(serializers.ModelSerializer):
 
     owner = serializers.PrimaryKeyRelatedField(
         queryset=Like.objects.all(), default=serializers.CurrentUserDefault()
+    )
+    review = serializers.PrimaryKeyRelatedField(
+        queryset=Like.objects.all(), default=ReviewFromURL()
     )
 
     class Meta:
@@ -34,7 +50,8 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, data):
-        if Review.objects.filter(
+        if Like.objects.filter(
             owner=data.get('owner'), review=data.get('review')
         ).exists():
             raise ValidationError('user like already exists')
+        return data

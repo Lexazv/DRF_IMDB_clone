@@ -20,7 +20,9 @@ class PlatformDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         user = self.request.user
-        platform = get_object_or_404(Platform, pk=self.kwargs.get('platform_id'))
+        platform = get_object_or_404(
+            Platform, pk=self.kwargs.get('platform_id')
+        )
         if user == platform.owner or user.is_superuser:
             return platform
         raise Http404

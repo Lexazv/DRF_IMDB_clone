@@ -149,10 +149,7 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle'
     ],
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': '1/second',
-        'user': '1/second'
-    }
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 
@@ -160,7 +157,7 @@ from datetime import timedelta
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
 }
 
 

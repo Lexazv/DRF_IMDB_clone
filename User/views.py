@@ -17,3 +17,4 @@ class Logout(generics.CreateAPIView):
     
     queryset = BlacklistedToken.objects.all()
     serializer_class = LogoutSerializer
+

@@ -26,7 +26,7 @@ class Review(GeneralInfo, models.Model):
     )
 
     def __str__(self) -> str:
-        return f'{self.owner} - {self.watchlist.title} - {self.rate}'
+        return f'{self.owner} - {self.film.title} - {self.rate}'
 
 
 class Like(GeneralInfo, models.Model):
@@ -34,4 +34,4 @@ class Like(GeneralInfo, models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f'{self.owner} - {self.review}'
+        return f'{self.owner}'
