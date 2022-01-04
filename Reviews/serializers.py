@@ -17,10 +17,10 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, data):
-        if Review.objects.filter(
-            owner=data.get('owner'), film=data.get('film')
-        ).exists():
-            raise ValidationError('user review already exists')
+        owner = data.get('owner')
+        film = data.get('film')
+        if Review.objects.filter(owner=owner, film=film).exists():
+            raise ValidationError(detail='user review already exists')
         return data
 
 
@@ -50,8 +50,8 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, data):
-        if Like.objects.filter(
-            owner=data.get('owner'), review=data.get('review')
-        ).exists():
-            raise ValidationError('user like already exists')
+        owner = data.get('owner')
+        review = owner = data.get('review')
+        if Like.objects.filter(owner=owner, review=review).exists():
+            raise ValidationError(detail='user like already exists')
         return data

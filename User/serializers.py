@@ -42,9 +42,8 @@ class CurrentUserRefreshToken:
     requires_context = True
 
     def __call__(self, token_field):
-        refresh_token = get_object_or_404(
-            OutstandingToken, user_id=token_field.context.get('request').user
-        )
+        user = token_field.context.get('request').user
+        refresh_token = get_object_or_404(OutstandingToken, user_id=user)
         return refresh_token
 
 
