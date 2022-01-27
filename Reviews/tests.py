@@ -40,6 +40,7 @@ class TestReview(TestCase):
             }
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        dump(response)
         self.assertEqual(response.data,
             {
                 'id': response.data.get('id'),

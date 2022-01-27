@@ -51,7 +51,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         owner = data.get('owner')
-        review = owner = data.get('review')
+        review = data.get('review')
         if Like.objects.filter(owner=owner, review=review).exists():
             raise ValidationError(detail='user like already exists')
         return data
